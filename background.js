@@ -22,6 +22,7 @@ async function updateIcon() {
     chrome.action.setIcon({ path: `./safe.png`, tabId: tab.id });
     return;
   }
+
   if (tab.url.includes("sesimi.app") || tab.url.includes("myadboxapp")) {
     icon = "danger";
   } else if (tab.url.includes("sesimi.io") || tab.url.includes("adboxapp")) {
@@ -31,5 +32,9 @@ async function updateIcon() {
   }
   chrome.action.setIcon({ path: `./${icon}.png`, tabId: tab.id });
 }
+
+chrome.action.onClicked.addListener((tab) => {
+  chrome.tabs.sendMessage(tab.id, { action: "icon_clicked" });
+});
 
 updateIcon();

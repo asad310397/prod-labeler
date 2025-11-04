@@ -3,9 +3,10 @@
   "name": "Active Tab Extension",
   "version": "1.0",
   "description": "Demonstrates interaction with the active tab.",
-  "permissions": ["activeTab", "scripting", "tabs"],
+  "permissions": ["activeTab", "scripting", "tabs", "storage"],
   "action": {
-    "default_icon": "safe.png"
+    "default_icon": "safe.png",
+    "default_popup": "url_list.html"
   },
   "background": {
     "service_worker": "background.js"
