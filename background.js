@@ -19,7 +19,7 @@ async function updateIcon() {
     tab.url.includes("edge://") ||
     tab.url.includes("about:")
   ) {
-    chrome.action.setIcon({ path: `./safe.png`, tabId: tab.id });
+    chrome.action.setIcon({ path: `assets/safe.png`, tabId: tab.id });
     return;
   }
 
@@ -30,11 +30,7 @@ async function updateIcon() {
   } else {
     icon = "safe";
   }
-  chrome.action.setIcon({ path: `./${icon}.png`, tabId: tab.id });
+  chrome.action.setIcon({ path: `assets/${icon}.png`, tabId: tab.id });
 }
-
-chrome.action.onClicked.addListener((tab) => {
-  chrome.tabs.sendMessage(tab.id, { action: "icon_clicked" });
-});
 
 updateIcon();

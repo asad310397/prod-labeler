@@ -1,6 +1,10 @@
 let dangerUrls = ["sesimi.app", "myadboxapp"];
 let warningUrls = ["sesimi.io", "adboxapp"];
 
+window.onload = function () {
+  populateUrls();
+};
+
 const addUrl = (url, type) => {
   if (type === "danger" && !dangerUrls.includes(url)) {
     dangerUrls.push(url);
@@ -36,13 +40,3 @@ const populateUrls = () => {
     warningList.appendChild(li);
   });
 };
-
-const getUrls = () => {
-  return { dangerUrls, warningUrls };
-};
-
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "icon_clicked") {
-    populateUrls();
-  }
-});
