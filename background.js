@@ -10,9 +10,15 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     updateIcon();
   }
 });
+
 async function updateIcon() {
   let icon = "";
   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+  // Use Promise-based approach for chrome.storage.sync.get
+  const data = await chrome.storage.sync.get(["dangerUrls", "warningUrls"]);
+  const dangerUrls = data.dangerUrls || [];
+  const warningUrls = data.warningUrls || [];
 
   if (
     tab.url.includes("chrome://") ||
@@ -23,9 +29,9 @@ async function updateIcon() {
     return;
   }
 
-  if (tab.url.includes("sesimi.app") || tab.url.includes("myadboxapp")) {
+  if (dangerUrls.some((url) => tab.url.includes(url))) {
     icon = "danger";
-  } else if (tab.url.includes("sesimi.io") || tab.url.includes("adboxapp")) {
+  } else if (warningUrls.some((url) => tab.url.includes(url))) {
     icon = "warning";
   } else {
     icon = "safe";
